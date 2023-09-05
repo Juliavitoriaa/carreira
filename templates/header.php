@@ -1,3 +1,4 @@
+<link href="static/css/header.css" rel='stylesheet'>
 <header>
     <nav>
          <img src="logo.png" class="logo">
