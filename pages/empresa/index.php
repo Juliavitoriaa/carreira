@@ -30,7 +30,7 @@
             ?>
             <tr>
                 <td><a href="#"><?=$empresa->getNome()?></a></td>
-                <td><?$empresa->getTelefone()?></td>
+                <td><?=$empresa->getTelefone()?></td>
             </tr>
 
             <?php 
