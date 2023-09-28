@@ -10,10 +10,19 @@ class Router extends RouterSwitch
         $route = substr($requestUri, 1);
         $route = str_replace("carreira/", "", $route);
 
+        error_log("Rota requisitada: $route",0);
+        $parts = explode("/",$route);
+        error_log("Partes da requisição: ".print_r($parts,true),0);
+        
+
+        $page = $parts[0];
+        $operation = count($parts)>1?$parts[1]:null;
+       
+ 
         if ($route == '') {
             $this->home();
         } else {
-            $this->$route();
+            $this->$page($operation);
         }
     }
 }
