@@ -9,16 +9,25 @@
         
         
         <div class="mb-3 input-group">
-        <select class="form-select" aria-label="Default select example" id="estados">
+        <span class="input-group-text">Estado</span>
+        <select class="form-select" aria-label="Default select example" id="estados" onchange="carregarCidadesIBGE()">
             <option selected>Selecione um estado</option>
         </select>
         </div>            
 
+        <div class="mb-3 input-group">
+        <span class="input-group-text">Cidade</span>
+        <select class="form-select" aria-label="Default select example" id="cidade" name="cidade">
+            <option selected>Selecione uma cidade</option>
+        </select>
+        </div>            
+
+
 
         <div class="mb-3 input-group">
-            <span class="input-group-text">Estado</span>
+            
             <!--Incluir os inputs que serão utilizados para enviar a geolocalização  -->        
-            <input type="hidden" id="geolocalizacao" name="geolocalizacao" onchange="carregarCidadesIBGE()">
+            <input type="hidden" id="geolocalizacao" name="geolocalizacao">
 
             <span class="input-group-text">Endereço</span>
             <input type="text" class="form-control" id="endereco" placeholder="Digite o endereço da empresa">
@@ -40,10 +49,12 @@
             .then(response => response.json())
             .then(data => {
                     if (data!=null && data.length>0) {
-
+                        /**ordena o vetor a partir do nome do estado */
+                        let ordenado = data.sort( (a,b)=>{ return a.nome.localeCompare(b.nome) } );
                         
                         var selectEstado = document.getElementById("estados");
-                        data.forEach(element => {
+                        /**Utiliza o vetor ordenado para gerar as opções do select */
+                        ordenado.forEach(element => {
                             
                             let option = document.createElement('option');
                             option.value= element['sigla'];
@@ -64,6 +75,29 @@
 
 
      function carregarCidadesIBGE(){
+        var selectEstado = document.getElementById("estados");
+        var estado = selectEstado.value;
+        let url = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/'+estado+'/municipios';
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                    if (data!=null && data.length>0) {
+                        var selectCidade = document.getElementById("cidade");
+
+                        
+                        selectCidade.innerHTML = "";
+                        data.forEach(element => {
+
+                            let option = document.createElement('option');
+                            option.value= element['id'];
+                            option.innerText = element['nome'];
+                            selectCidade.appendChild(option);
+                            
+                        });
+                    }
+            }).catch(error => {
+                    console.log("Erro carregando cidades "+error);
+            });;
         
      }
 </script>    
