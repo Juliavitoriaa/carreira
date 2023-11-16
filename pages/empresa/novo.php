@@ -71,7 +71,7 @@
             .then(response => response.json())
             .then(data => {
                     if (data!=null && data.length>0) {
-
+                        let ordenado = data.sort( (a,b)=>{ return .a.nome.localeCompare(b.nome) } );
                         
                         var selectEstado = document.getElementById("estados");
                         data.forEach(element => {
