@@ -25,12 +25,13 @@
 
         <div class="mb-3 input-group">
         <span class="input-group-text">Estado</span>
-        <select class="form-select" aria-label="Default select example" id="estados" onchange="carregarCidadesIBGE()">
+        <select class="form-select" aria-label="Default select example" id="estados" 
+           onchange="carregarCidadesIBGE()">   
             <option selected>Selecione um estado</option>
         </select>
-        <div class="invalid-feedback">
-          Por favor digite um Estado
-         </div>
+            <div class="invalid-feedback">
+                Por favor digite um Estado
+            </div>
         </div>            
 
         <div class="mb-3 input-group">
@@ -131,7 +132,7 @@
         } 
 
         let etelefone =document.getElementById("telefone");
-        if (etelefone.value==null || etelefone.value.length >=9) {
+        if (etelefone.value==null || etelefone.value.length <9) {
             passou = false;
             etelefone.classList.add("is-invalid");
         } else {
@@ -139,12 +140,21 @@
         } 
         
         let ecidade =document.getElementById("cidade");
-        if (ecidade.value==null || ecidade.value.length >=9) {
+        if (ecidade.value==null || ecidade.value =="") {
             passou = false;
             ecidade.classList.add("is-invalid");
         } else {
             ecidade.classList.remove("is-invalid");
         } 
+
+        let egeo =document.getElementById("geolocalização");
+        let eend =document.getElementById("endereco");
+        if (egeo.value==null || egeo.value.length <=3) {
+            passou = false;
+            eend.classList.add("is-invalid");
+        } else {
+            eend.classList.remove("is-invalid");
+        }
 
         if (!passou) {
              e.preventDefault();
